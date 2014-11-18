@@ -17,6 +17,7 @@
 #include "ext4_utils.h"
 #include "wipe.h"
 
+#ifndef ICS_AUDIO_BLOB //in no way related to this crap but seems like a quick and dirty trick
 #if WIPE_IS_SUPPORTED
 
 #if defined(__linux__)
@@ -86,3 +87,10 @@ int wipe_block_device(int fd, s64 len)
 }
 
 #endif  /* WIPE_IS_SUPPORTED */
+#else //ics audio blob ... very hacky... very lazy ass
+int wipe_block_device(int fd, s64 len)
+{
+	warn("Wipe via secure discard suppressed due to bug in EMMC firmware\n");
+	return 1;
+}
+#endif //ics audio blob
